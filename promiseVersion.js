@@ -1,91 +1,94 @@
 
-
-
-const mowYardPromise = new Promise((resolve,reject) => {
+function mowYard(name) {
     
-    setTimeout(() => {
-        if(Math.random() < 0) {
-            resolve(' fell asleep')
-        } else {
-            reject(' finished mowing the yard.')
-        }
-    }, 2000)
-});
-
-const weedEatPromise = new Promise((resolve,reject) => {
-    
-    setTimeout(() => {
-        if(Math.random() < 0.15) {
-            resolve('fell asleep after mowing the lawn.')
-        } else {
-            reject('finished weed eating.')
-        }
-    }, 1500)
-});
-
-const trimHedgesPromise = new Promise((resolve,reject) => {
-    
-    setTimeout(() => {
-        if(Math.random() < 0.2) {
-            resolve('fell asleep after weed eating.')
-        } else {
-            reject('finished trimming the hedges.')
-        }
-    }, 1000)
-});
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve( name + ' finished mowing the yard.');
+        }, 2000);
+    });
+}
 
 
-const collectWoodPromise = new Promise((resolve,reject) => {
-    
-    setTimeout(() => {
-        if(Math.random() < 0.25) {
-            resolve(' fell asleep after trimming the hedges.')
-        } else {
-            reject(' finished collecting wood')
-        }
-    }, 2500)
-});
+function weedEat (name) {
 
-const waterGardenPromise = new Promise((resolve,reject) => {
-    
-    setTimeout(() => {
-        if(Math.random() < 0.3) {
-            resolve(' fell asleep after trimming the hedges.')
-        } else {
-            reject(' finished watering the garden.')
-        }
-    }, 500)
-});
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            
+            if (Math.random() > 0.15) {
+                resolve( name + ' finished weed eating.');
+            }
+            else{
+                reject(name + 'fell asleep after mowing the yard.');
+            }
+  
+        }, 1500);
+    });
+}
 
+function trimHedges(name) {
 
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            
+            if (Math.random() > 0.20) {
+                resolve( name + ' finished trimming the hedges.');
+            }
+            else{
+                reject(name + ' fell asleep after weed eating.');
+            }
 
-function doSummerChoresPromise(name) {
-mowYardPromise
-.then((value) => {
-    console.log(value)
-    return weedEatPromise
-})
-.then((value) => {
-    console.log(value)
-    return trimHedgesPromise
-})
-.then((value) => {
-    console.log(value)
-    return collectWoodPromise
-})
-.then((value) => {
-    console.log(value)
-    return waterGardenPromise
-})
+        }, 1000);   
+    });     
+}
 
-.then((value) => {
-    console.log(' finished all their chores!')
-})
-.catch((error) => {
-    console.log(' did not finish their chores.')
-})
+function collectWood(name) {
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+
+            if (Math.random() > 0.25) {
+                resolve( name + ' finished collecting wood.');
+            }
+            else{
+                reject(name + ' fell asleep after trimming the hedges');
+            }
+        }, 2500);
+    });
+}
+            
+function waterGarden (name) {
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+
+            if (Math.random() > 0.30) {
+                resolve( name + ' finished watering the garden.');
+            }   
+            else{
+                reject(name + ' fell asleep after collecting wood.');
+            }
+        }, 500);
+    });
+}         
+
+//
+function doSummerChoresPromise (name) {
+mowYard(name).then(value => {console.log(value); return weedEat(name)})
+            .then(value => {console.log(value); return trimHedges(name)})
+            .then(value => {console.log(value); return collectWood(name)})
+            .then(value => {console.log(value); return waterGarden(name)})
+            .then(value => {console.log(value); console.log(name + 'finished all their chores!')})
+            .catch(error => console.error(error));
 
 }
 
-doSummerChoresPromise()
+//
+ 
+
+doSummerChoresPromise("Harry ");
+
+
+
+
+
 
